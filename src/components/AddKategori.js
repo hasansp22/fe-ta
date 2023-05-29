@@ -6,7 +6,7 @@ const AddKategori = () => {
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
-  // ganti localhost menjadi ip ec2
+  // ganti localhost menjadi ip
   const saveKategori = async (e) => {
     e.preventDefault();
     try {
