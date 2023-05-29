@@ -9,6 +9,8 @@ import KategoriList from "./components/KategoriList";
 import AddKategori from "./components/AddKategori";
 import EditKategori from "./components/EditKategori";
 
+//tes
+
 function App() {
   return (
     <Router>
