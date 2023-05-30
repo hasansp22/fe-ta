@@ -10,7 +10,7 @@ const AddKategori = () => {
   const saveKategori = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://54.169.160.105:5000/kategori", {
+      await axios.post("http:// 54.254.165.218:5000/kategori", {
         name,
       });
       navigate("/kategori-admin");

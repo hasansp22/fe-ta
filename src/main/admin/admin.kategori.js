@@ -11,13 +11,13 @@ function KategoriAdmin() {
   }, []);
 
   const getKategori = async () => {
-    const response = await axios.get("http://54.169.160.105:5000/kategori");
+    const response = await axios.get("http:// 54.254.165.218:5000/kategori");
     setKategori(response.data);
   };
 
   const deleteKategori = async (id) => {
     try {
-      await axios.delete(`http://54.169.160.105:5000/kategori/${id}`);
+      await axios.delete(`http:// 54.254.165.218:5000/kategori/${id}`);
       getKategori();
     } catch (error) {
       console.log(error);
