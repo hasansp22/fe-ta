@@ -14,7 +14,7 @@ const EditKategori = () => {
   const updateKategori = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http:// 54.254.165.218:5000/kategori/${id}`, {
+      await axios.patch(`http://54.254.165.218:5000/kategori/${id}`, {
         name,
       });
       navigate("/kategori-admin");
@@ -25,7 +25,7 @@ const EditKategori = () => {
 
   const getKategoriById = async () => {
     const response = await axios.get(
-      `http:// 54.254.165.218:5000/kategori/${id}`
+      `http://54.254.165.218:5000/kategori/${id}`
     );
     setName(response.data.name);
   };
