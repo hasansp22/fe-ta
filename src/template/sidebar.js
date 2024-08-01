@@ -26,15 +26,13 @@ function SideBar() {
             </MenuItem>
           </Link>
 
-          <Link to={"/main"} className="link-menuitem">
-            <MenuItem icon={<LaptopOutlinedIcon />}>
-              Tentunkan Laptopmu!
-            </MenuItem>
+          <Link to={"/pilih-laptop"} className="link-menuitem">
+            <MenuItem icon={<LaptopOutlinedIcon />}>Tentukan Laptop</MenuItem>
           </Link>
 
-          <Link to={"/login-admin"} className="link-menuitem">
+          {/* <Link to={"/login-admin"} className="link-menuitem">
             <MenuItem icon={<PersonOutlinedIcon />}>Login Admin</MenuItem>
-          </Link>
+          </Link> */}
         </Menu>
       </Sidebar>
     </div>

@@ -6,12 +6,15 @@ import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 
 function SideBar() {
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+  };
   //   const { collapseSidebar } = useProSidebar();
   return (
     <div className="side-bar body">
       <Sidebar className="color">
         <Menu>
-          <Link to={"/home-admin"} className="link-menuitem">
+          <Link to={"/kategori-admin"} className="link-menuitem">
             <MenuItem
               icon={<MenuOutlinedIcon />}
               // onClick={() => {
@@ -24,14 +27,14 @@ function SideBar() {
           </Link>
 
           <Link to={"/kategori-admin"} className="link-menuitem">
-            <MenuItem icon={<CategoryOutlinedIcon />}>Kategori Laptop</MenuItem>
+            <MenuItem icon={<CategoryOutlinedIcon />}>Fungsi Laptop</MenuItem>
           </Link>
 
           <Link to={"/kriteria-admin"} className="link-menuitem">
             <MenuItem icon={<CategoryOutlinedIcon />}>Kriteria Laptop</MenuItem>
           </Link>
 
-          <Link to={"/"} className="link-menuitem">
+          <Link to={"/"} className="link-menuitem" onClick={logout}>
             <MenuItem icon={<LogoutOutlinedIcon />}>Log Out</MenuItem>
           </Link>
         </Menu>

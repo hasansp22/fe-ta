@@ -1,31 +1,37 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./login.component";
 import Home from "./main/Home";
-import LoginAdmin from "./main/login.admin";
-import KategoriAdmin from "./main/admin/admin.kategori";
-import KriteriaAdmin from "./main/admin/admin.kriteria";
-import KategoriList from "./components/KategoriList";
-import AddKategori from "./components/AddKategori";
-import EditKategori from "./components/EditKategori";
-
-//tes
+import LoginAdmin from "./main/LoginAdmin";
+import KategoriAdmin from "./admin/admin.kategori";
+import KriteriaAdmin from "./admin/admin.kriteria";
+import AddKategori from "./components/kategori/AddKategori";
+import AddKriteria from "./components/kriteria/AddKriteria";
+import EditKategori from "./components/kategori/EditKategori";
+import EditKriteria from "./components/kriteria/EditKriteria";
+import PrivateRoute from "./PrivateRoute";
+import PilihLaptop from "./main/PilihLaptop";
+import Tips from "./main/Tips";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/user" element={<KategoriList />} />
-          <Route path="/add-kategori" element={<AddKategori />} />
-          <Route path="/edit/:id" element={<EditKategori />} />
-          <Route path="/sign-in" element={<Login />} />
-          <Route path="/login-admin" element={<LoginAdmin />} />
-          <Route path="/home-admin" element={<KategoriAdmin />} />
-          <Route path="/kategori-admin" element={<KategoriAdmin />} />
-          <Route path="/kriteria-admin" element={<KriteriaAdmin />} />
-        </Routes>
+        <Fragment>
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route path="/tips" element={<Tips />} />
+            <Route path="/pilih-laptop" element={<PilihLaptop />} />
+            <Route path="/login-admin" element={<LoginAdmin />} />
+            <Route exact path="/" element={<PrivateRoute />}>
+              <Route path="/add-kategori" element={<AddKategori />} />
+              <Route path="/add-kriteria" element={<AddKriteria />} />
+              <Route path="/edit-kategori/:id" element={<EditKategori />} />
+              <Route path="/edit-kriteria/:id" element={<EditKriteria />} />
+              <Route path="/kategori-admin" element={<KategoriAdmin />} />
+              <Route path="/kriteria-admin" element={<KriteriaAdmin />} />
+            </Route>
+          </Routes>
+        </Fragment>
       </div>
     </Router>
   );

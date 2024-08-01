@@ -1,0 +1,108 @@
+body,
+html,
+.App,
+#root,
+.auth-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+}
+
+.auth-inner {
+  width: 450px;
+  margin: auto;
+  background: #ffffff;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  padding: 40px 55px 45px 55px;
+  border-radius: 15px;
+  transition: all 0.3s;
+}
+
+.auth-wrapper .form-control:focus {
+  border-color: #167bff;
+  box-shadow: none;
+}
+
+.auth-wrapper h3 {
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+
+.custom-control-label {
+  font-weight: 400;
+}
+
+.forgot-password,
+.forgot-password a {
+  text-align: right;
+  font-size: 13px;
+  padding-top: 10px;
+  color: #7f7d7d;
+  margin: 0;
+}
+
+.forgot-password a {
+  color: #167bff;
+}
+
+.body {
+  font-family: "Lato", sans-serif;
+}
+
+.judul-page {
+  margin-top: 15px;
+  margin-left: 30px;
+  text-align: center;
+}
+
+.auth-admin {
+  margin-top: 30px;
+}
+
+.side-bar {
+  display: flex;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  overflow-x: hidden;
+  top: 0;
+  left: 0;
+  background-color: blue !important;
+}
+
+.link-menuitem {
+  text-decoration: none;
+  color: black;
+}
+
+.home-main {
+  margin-left: 35vh;
+  margin-right: 15vh;
+}
+
+.page {
+  margin-left: 8vh;
+  margin-right: 8vh;
+  /* margin: 30px; */
+}
+
+.btn-kategori {
+  float: right;
+  margin-bottom: 3vh;
+}
+
+.sub-judula{
+  font-size: 40px;
+}
+
+.font-criteria{
+  font-size: 15px;
+}
