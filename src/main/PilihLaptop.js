@@ -5,30 +5,34 @@ import axios from "axios";
 function PilihLaptop() {
   const min = 0.1;
   const max = 9;
-  let num = 1;
+  let numTopLaptop = 1;
+  let numWorstLaptop = 1;
 
   const [listKategori, setListKategori] = useState([]);
   const [listKriteria, setListKriteria] = useState([]);
   const [listDisplay, setListDisplay] = useState([]);
   const [listLaptop, setListLaptop] = useState([]);
+  const [listLaptopWorst, setListLaptopWorst] = useState([]);
+  const [isTableVisible, setIsTableVisible] = useState(false);
 
   const [inputs, setInputs] = useState([]);
   const [filters, setFilters] = useState([]);
   const [result, setResults] = useState({
     filtered_laptop: [],
   });
-  const [resp, setResponse] = useState(
-    // []
-    { CR: 0, top_laptops: [] }
-    // cr: 0,
-    // ci: 0,
-  );
+
+  const [resp, setResponse] = useState({
+    CR: 0,
+    top_laptops: [],
+    worst_laptops: [],
+    statement: "",
+  });
 
   const selectOptions = [
     ["Asus", "Acer", "Apple", "MSI", "Lenovo", "HP", "Dell"],
     listKategori,
     // listDisplay,
-    ["13 - 15", "16 - 18"],
+    ["10 - 12", "13 - 15", "16 - 18"],
     ["1kg - 2kg", "2kg - 3kg"],
     [
       "Intel Core i3",
@@ -94,7 +98,6 @@ function PilihLaptop() {
         const { data } = response;
         if (response.status === 200) {
           setListKategori(data.map((item) => [item.name]));
-          // setListKategori(data);
         }
       })
       .catch((error) => console.log(error));
@@ -119,7 +122,6 @@ function PilihLaptop() {
         const { data } = response;
         if (response.status === 200) {
           setListDisplay(data.map((item) => [item.display]));
-          // setListDisplay(data);
         }
       })
       .catch((error) => console.log(error));
@@ -140,29 +142,19 @@ function PilihLaptop() {
   const HitungKriteria = async (e) => {
     e.preventDefault();
     try {
-      const filteredLaptops = listLaptop.map((laptop) => ({
-        id: laptop.id,
-        name: laptop.name,
-        cpu: laptop.cpu,
-        gpu: laptop.gpu,
-        storage: laptop.storage,
-        ram: laptop.ram,
-        display: laptop.display,
-        weight: laptop.weight,
-        price: laptop.price,
-      }));
-
       await axios
         .post("http://localhost:5000/kriteria/hitung", inputs)
         .then(function (response) {
           setResponse({
             CR: response.data.CR,
+            statement: response.data.statement,
             top_laptops: response.data.top_laptop,
+            worst_laptops: response.data.worst_laptop,
           });
           setListLaptop(response.data.top_laptop);
+          setListLaptopWorst(response.data.worst_laptop);
           console.log(response.data);
         });
-      // .then((resp) => setResponse(resp));
     } catch (error) {
       console.log(error);
     }
@@ -185,15 +177,20 @@ function PilihLaptop() {
           setResults({
             filtered_laptop: response.data.filtered_laptops,
           });
-          // setResponse({
-          //   CR: response.data.CR,
-          // });
           setListLaptop(response.data.filtered_laptops);
           console.log(response.data);
         });
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const tableWorstHide = () => {
+    setIsTableVisible(false);
+  };
+
+  const tableWorstShow = () => {
+    setIsTableVisible(true);
   };
 
   return (
@@ -230,13 +227,15 @@ function PilihLaptop() {
                     <div className="col-7">{renderSelects()}</div>
                   </div>
                   <div className="text-center field mb-3">
-                    <button type="submit" className="btn btn-sm btn-success">
+                    <button
+                      type="submit"
+                      className="btn btn-sm btn-success"
+                      onClick={tableWorstHide}
+                    >
                       Tampil
                     </button>
                   </div>
                 </form>
-
-                {/* {isVisibleSelect && ( */}
 
                 <h3 className="mb-1">Peringkat Kriteria</h3>
                 <div className="mb-3 font-criteria">
@@ -273,7 +272,11 @@ function PilihLaptop() {
                     </>
                   ))}
                   <div className="text-center field">
-                    <button type="submit" className="btn btn-sm btn-success">
+                    <button
+                      type="submit"
+                      className="btn btn-sm btn-success"
+                      onClick={tableWorstShow}
+                    >
                       Proses
                     </button>
                   </div>
@@ -284,19 +287,26 @@ function PilihLaptop() {
                     <small>CR</small>
                   </div>
                   <div className="col-md-9">
-                    {/* {resp.map((item) => (
-                      <> */}
-                    {/* <small>{resp.cr}</small> */}
                     <input
-                      className="form-control form-control-sm w-50 mb-5"
+                      className="form-control form-control-sm w-50"
                       disabled
                       value={resp.CR}
                     ></input>
-                    {/* </>
-                    ))} */}
                   </div>
                 </div>
-                {/* )} */}
+                <div className="row mt-3">
+                  <div className="col-md-3">
+                    <small hidden>CR</small>
+                  </div>
+
+                  <div className="col-md-9">
+                    <input
+                      className="form-control form-control-sm w-50"
+                      disabled
+                      value={resp.statement}
+                    ></input>
+                  </div>
+                </div>
               </div>
 
               <div className="col-md-8">
@@ -310,28 +320,61 @@ function PilihLaptop() {
                       <th>Storage</th>
                       <th>RAM</th>
                       <th>Layar</th>
-                      {/* <th>temp</th> */}
                       <th>Harga</th>
+                      <th>Nilai</th>
                     </tr>
                     {listLaptop.map((item) => (
                       <>
                         {/* <div key={item.id}> */}
                         <tr>
-                          <td value={item.id}>{num++}</td>
+                          <td value={item.id}>{numTopLaptop++}</td>
                           <td value={item.name}>{item.name}</td>
                           <td value={item.cpu}>{item.cpu}</td>
                           <td value={item.gpu}>{item.gpu}</td>
                           <td value={item.storage}>{item.storage} gb</td>
                           <td value={item.ram}>{item.ram}gb</td>
                           <td value={item.display}>{item.display} inch</td>
-                          {/* <td value={item.temp_cpu}>{item.temp_cpu}</td> */}
                           <td value={item.price}>Rp. {item.price}</td>
+                          <td value={item.score}>{item.score}</td>
                         </tr>
-                        {/* </div> */}
-                        {/* {num++} */}
                       </>
                     ))}
                   </table>
+
+                  {isTableVisible && (
+                    <>
+                      <h3 className="mt-3">Laptop Terendah</h3>
+                      <table className="table">
+                        <tr>
+                          <th></th>
+                          <th>Nama Laptop</th>
+                          <th>CPU</th>
+                          <th>GPU</th>
+                          <th>Storage</th>
+                          <th>RAM</th>
+                          <th>Layar</th>
+                          <th>Harga</th>
+                          <th>Nilai</th>
+                        </tr>
+                        {listLaptopWorst.map((item) => (
+                          <>
+                            {/* <div key={item.id}> */}
+                            <tr>
+                              <td value={item.id}>{numWorstLaptop++}</td>
+                              <td value={item.name}>{item.name}</td>
+                              <td value={item.cpu}>{item.cpu}</td>
+                              <td value={item.gpu}>{item.gpu}</td>
+                              <td value={item.storage}>{item.storage} gb</td>
+                              <td value={item.ram}>{item.ram}gb</td>
+                              <td value={item.display}>{item.display} inch</td>
+                              <td value={item.price}>Rp. {item.price}</td>
+                              <td value={item.score}>{item.score}</td>
+                            </tr>
+                          </>
+                        ))}
+                      </table>
+                    </>
+                  )}
                 </small>
               </div>
             </div>
